@@ -8,6 +8,7 @@ typedjson = {editable = true, path = "."}
 
 [dev-packages]
 mypy = "~= 0.641"
+pytest = "~= 4.0.1"
 ptpython = "*"
 yapf = "*"
 
