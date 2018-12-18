@@ -45,7 +45,7 @@ json = {
     },
 }
 
-print(typedjson.decode(CatJson, json))  # CatJson(id='test-cat', age=13, name=NameJson(first='Jiji', last=None))
+print(typedjson.decode(CatJson, json))  # Output: CatJson(id='test-cat', age=13, name=NameJson(first='Jiji', last=None))
 
 print(typedjson.decode(CatJson, {}))  # Output: <DecodingError path=('id',)>
 ```
