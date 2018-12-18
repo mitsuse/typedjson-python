@@ -61,6 +61,6 @@ Please refer to [test codes](/tests/test_.py) for more detail.
 
 [license-badge]: https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square
 [license]: LICENSE
-[pypi-badge]: https://img.shields.io/pypi/v/typedjson.svg
+[pypi-badge]: https://img.shields.io/pypi/v/typedjson.svg?style=flat-square
 [pypi]: https://pypi.org/project/typedjson/
 [pep-563]: https://www.python.org/dev/peps/pep-0563/
