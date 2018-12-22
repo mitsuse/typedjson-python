@@ -1,0 +1,7 @@
+{
+  "id": "test-cat",
+  "age": 13,
+  "name": {
+      "first": "jiji"
+  }
+}
