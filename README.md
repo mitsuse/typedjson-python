@@ -2,6 +2,7 @@
 
 [![License][license-badge]][license]
 [![Pypi][pypi-badge]][pypi]
+[![CI][ci-badge]][ci]
 
 JSON decoding for Python with type hinting (PEP 484).
 
@@ -63,4 +64,6 @@ Please refer to [test codes](/tests/test_.py) for more detail.
 [license]: LICENSE
 [pypi-badge]: https://img.shields.io/pypi/v/typedjson.svg?style=flat-square
 [pypi]: https://pypi.org/project/typedjson/
+[ci-badge]: https://img.shields.io/travis/mitsuse/typedjson-python/master.svg?style=flat-square
+[ci]: https://travis-ci.org/mitsuse/typedjson-python
 [pep-563]: https://www.python.org/dev/peps/pep-0563/
