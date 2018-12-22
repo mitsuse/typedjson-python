@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 0.1.0
+
 - Support decoding types as below:
     - primitive types like `str`, `int`, `float`, `bool` and `None`.
     -`Union` and `Optional`.
