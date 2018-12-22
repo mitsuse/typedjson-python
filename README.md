@@ -57,7 +57,6 @@ Please refer to [test codes](/tests/test_.py) for more detail.
 ## TODO
 
 - Use `__init__.__annotation__` to decode JSON as arbitrary class.
-- Support API like `json.load` and `json.loads`.
 
 
 [license-badge]: https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square

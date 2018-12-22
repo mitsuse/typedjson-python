@@ -29,6 +29,7 @@ setup(
     keywords=[],
     packages=find_packages(exclude=[
         'tests',
+        'fixtures',
     ]),
     entry_points={
         'console_scripts': [],

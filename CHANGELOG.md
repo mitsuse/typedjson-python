@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Support API like `json.load` and `json.loads`.
+
 
 ## 0.1.0
 
