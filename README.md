@@ -51,7 +51,7 @@ print(typedjson.decode(CatJson, json))  # Output: CatJson(id='test-cat', age=13,
 print(typedjson.decode(CatJson, {}))  # Output: <DecodingError path=('id',)>
 ```
 
-Please refer to [test codes](/tests/test_.py) for more detail.
+Please refer to [test codes](/tests/) for more detail.
 
 
 ## TODO
