@@ -14,6 +14,17 @@ JSON decoding for Python with type hinting (PEP 484).
 - Use non-generic `@dataclasses.dataclass` without modifying `__init__` to decode JSON as class.
 
 
+## Features
+
+- Support decoding types as below:
+    - primitive types like `str`, `int`, `float`, `bool` and `None`.
+    -`Union` and `Optional`.
+    - homogeneous and heterogeneous `Tuple`
+    - variable-length `Tuple`.
+    - non-generic dataclasses.
+- Support API like `json.load` and `json.loads`.
+
+
 ## Example
 
 
