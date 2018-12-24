@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 0.3.0
+
 - Support decoding parameterized data class.
 - Prohibit decoding generic and raw type
 
