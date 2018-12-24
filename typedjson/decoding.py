@@ -80,7 +80,12 @@ def decode_as_union(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
     from typedjson.annotation import origin_of
 
     if origin_of(type_) is Union:
-        for type_ in args_of(type_):
+        args = args_of(type_)
+        for type_ in args:
+            if type_.__class__ is TypeVar:
+                return DecodingError(path)
+
+        for type_ in args:
             decoded = decode(type_, json, path)
             if not isinstance(decoded, DecodingError):
                 break
