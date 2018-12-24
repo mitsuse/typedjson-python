@@ -11,7 +11,7 @@ JSON decoding for Python with type hinting (PEP 484).
 
 - Python >= 3.7
 - Use `from __future__ import annotations` (See [PEP 563][pep-563]).
-- Use non-generic `@dataclasses.dataclass` without modifying `__init__` to decode JSON as class.
+- Use non-generic or parameterized `@dataclasses.dataclass` without modifying `__init__` to decode JSON as class.
 
 
 ## Features
@@ -21,7 +21,7 @@ JSON decoding for Python with type hinting (PEP 484).
     -`Union` and `Optional`.
     - homogeneous and heterogeneous `Tuple`
     - variable-length `Tuple`.
-    - non-generic dataclasses.
+    - non-generic and parameterized dataclasses.
 - Support API like `json.load` and `json.loads`.
 
 

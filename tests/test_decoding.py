@@ -2,8 +2,10 @@
 
 from __future__ import annotations
 
+from typing import Generic
 from typing import Optional
 from typing import Tuple
+from typing import TypeVar
 from typing import Union
 
 import typedjson
@@ -34,6 +36,16 @@ class DocumentJson:
     id: str
     content: str
     owner: Optional[OwnerJson]
+
+
+T1 = TypeVar('T1')
+T2 = TypeVar('T2')
+
+
+@dataclass(frozen=True)
+class GenericJson(Generic[T1, T2]):
+    t1: T1
+    t2: T2
 
 
 def test_can_decode_str() -> None:
@@ -126,6 +138,12 @@ def test_can_decode_dataclass_with_redundancy() -> None:
     )
 
     assert typedjson.decode(UserJson, json) == expectation
+
+
+def test_can_decode_parameterized_dataclass() -> None:
+    json = {'t1': 100, 't2': 'hello'}
+    expectation = GenericJson(t1=100, t2='hello')
+    assert typedjson.decode(GenericJson[int, str], json) == expectation
 
 
 def test_can_decode_dataclass_with_optional() -> None:
@@ -245,6 +263,18 @@ def test_cannot_decode_variable_tuple_with_short_sequence() -> None:
     assert isinstance(typedjson.decode(Tuple[int, ...], json), typedjson.DecodingError)
 
 
+def test_cannot_decode_generic_tuple() -> None:
+    U = TypeVar('U')
+    json = (0, 1, 2)
+    assert isinstance(typedjson.decode(Tuple[int, U, int], json), typedjson.DecodingError)
+
+
+def test_cannot_decode_generic_union() -> None:
+    U = TypeVar('U')
+    json = 100
+    assert isinstance(typedjson.decode(Union[int, U], json), typedjson.DecodingError)
+
+
 def test_cannot_decode_dataclass_with_lack_of_property() -> None:
     json = {
         'id': 'test-user',
@@ -259,3 +289,20 @@ def test_cannot_decode_dataclass_with_lack_of_property() -> None:
 
     assert isinstance(result, typedjson.DecodingError)
     assert result.path == expectation.path
+
+
+def test_cannot_decode_parameterized_dataclass_with_wrong_parameter() -> None:
+    json = {'t1': 100, 't2': 'hello'}
+    assert isinstance(typedjson.decode(GenericJson[int, int], json), typedjson.DecodingError)
+
+
+def test_cannot_decode_raw_dataclass() -> None:
+    json = {'t1': 100, 't2': 'hello'}
+    assert isinstance(typedjson.decode(GenericJson, json), typedjson.DecodingError)
+
+
+def test_cannot_decode_generic_dataclass() -> None:
+    U1 = TypeVar('U1')
+    U2 = TypeVar('U2')
+    json = {'t1': 100, 't2': 'hello'}
+    assert isinstance(typedjson.decode(GenericJson[U1, U2], json), typedjson.DecodingError)
