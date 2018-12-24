@@ -70,6 +70,7 @@ Please refer to [test codes](/tests/) for more detail.
 - Use `__init__.__annotation__` to decode JSON as arbitrary class.
 - Provide API to dump like `json.dump` and `json.dumps`.
 - Support Python 3.6 for environments where Python 3.7 is unavailable.
+- Prohibit decoding `List`, `Set` and `Dict` explicitly.
 
 
 [license-badge]: https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square
