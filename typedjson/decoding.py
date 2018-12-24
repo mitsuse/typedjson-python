@@ -32,8 +32,6 @@ class DecodingError(Exception):
 
 
 def decode(type_: Type[Decoded], json: Any, path: Path = ()) -> Union[Decoded, DecodingError]:
-    from typing import get_type_hints
-
     decoders = (
         decode_as_union,
         decode_as_tuple,
@@ -57,15 +55,16 @@ def decode_as_primitive(type_: Type[Decoded], json: Any, path: Path) -> Union[De
 
 
 def decode_as_dataclass(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
-    from typing import get_type_hints
+    from typedjson.annotation import hints_of
 
     def _decode(annotation: Tuple[str, Any]) -> Union[Decoded, DecodingError]:
         key, type_ = annotation
         value = json.get(key)
         return decode(type_, value, path + (key, ))
 
-    if isinstance(json, dict) and hasattr(type_, '__annotations__'):
-        parameters = tuple(map(_decode, get_type_hints(type_).items()))
+    annotations = hints_of(type_)
+    if isinstance(json, dict) and annotations is not None:
+        parameters = tuple(map(_decode, annotations.items()))
 
         for parameter in parameters:
             if isinstance(parameter, DecodingError):
@@ -77,8 +76,11 @@ def decode_as_dataclass(type_: Type[Decoded], json: Any, path: Path) -> Union[De
 
 
 def decode_as_union(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
-    if hasattr(type_, '__origin__') and type_.__origin__ is Union:  # type: ignore
-        for type_ in type_.__args__:  # type: ignore
+    from typedjson.annotation import args_of
+    from typedjson.annotation import origin_of
+
+    if origin_of(type_) is Union:
+        for type_ in args_of(type_):
             decoded = decode(type_, json, path)
             if not isinstance(decoded, DecodingError):
                 break
@@ -89,6 +91,9 @@ def decode_as_union(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
 
 
 def decode_as_tuple(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
+    from typedjson.annotation import args_of
+    from typedjson.annotation import origin_of
+
     def _required_length(args: Tuple[Type, ...]) -> int:
         return len(args) - 1 if args[-1] is ... else len(args)
 
@@ -105,13 +110,13 @@ def decode_as_tuple(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
                 yield type_
             last = type_
 
-    if hasattr(type_, '__origin__') and type_.__origin__ is tuple:  # type: ignore
+    if origin_of(type_) is tuple:
         list_decoded: List[Any] = []
         length = len(json)
-        if _required_length(type_.__args__) > length:  # type: ignore
+        if _required_length(args_of(type_)) > length:
             return DecodingError(path)
 
-        for (index, (type_, element)) in enumerate(zip(_iter_args(type_.__args__), json)):  # type: ignore
+        for (index, (type_, element)) in enumerate(zip(_iter_args(args_of(type_)), json)):
             decoded = decode(type_, element, path + (str(index), ))
             if isinstance(decoded, DecodingError):
                 return decoded
