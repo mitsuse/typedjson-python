@@ -68,6 +68,7 @@ Please refer to [test codes](/tests/) for more detail.
 ## TODO
 
 - Use `__init__.__annotation__` to decode JSON as arbitrary class.
+- Provide API to dump like `json.dump` and `json.dumps`.
 
 
 [license-badge]: https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square
