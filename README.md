@@ -77,6 +77,8 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md).
 - Support Python 3.6 for environments where Python 3.7 is unavailable.
 - Prohibit decoding `List`, `Set` and `Dict` explicitly.
 - Provide the API document.
+- Explain why typedjson uses undocumented APIs.
+- Explain what typedjson resolves.
 
 
 [license-badge]: https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square
