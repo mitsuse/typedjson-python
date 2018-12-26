@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Support decoding `List`.
+
 
 ## 0.3.0
 

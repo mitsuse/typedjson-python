@@ -35,6 +35,7 @@ def decode(type_: Type[Decoded], json: Any, path: Path = ()) -> Union[Decoded, D
     decoders = (
         decode_as_union,
         decode_as_tuple,
+        decode_as_list,
         decode_as_primitive,
         decode_as_dataclass,
     )
@@ -129,5 +130,25 @@ def decode_as_tuple(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
             list_decoded.append(decoded)
 
         return tuple(list_decoded)  # type: ignore
+    else:
+        return DecodingError(path)
+
+
+def decode_as_list(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
+    from typedjson.annotation import args_of
+    from typedjson.annotation import origin_of
+
+    if origin_of(type_) is list:
+        Element = args_of(type_)[0]
+        list_decoded: List[Any] = []
+
+        for index, element in enumerate(json):
+            decoded = decode(Element, element, path + (str(index), ))
+            if isinstance(decoded, DecodingError):
+                return decoded
+
+            list_decoded.append(decoded)
+
+        return list(list_decoded)  # type: ignore
     else:
         return DecodingError(path)
