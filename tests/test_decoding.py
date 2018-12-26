@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Generic
+from typing import List
 from typing import Optional
 from typing import Tuple
 from typing import TypeVar
@@ -93,6 +94,11 @@ def test_can_decode_homogeneous_variable_tuple() -> None:
 def test_can_decode_heterogeneous_fixed_tuple() -> None:
     json = (0, 1.1, 'hello', True)
     assert typedjson.decode(Tuple[int, float, str, bool], json) == json
+
+
+def test_can_decode_list() -> None:
+    json = list(range(10))
+    assert typedjson.decode(List[int], json) == json
 
 
 def test_can_decode_dataclass() -> None:
@@ -267,6 +273,12 @@ def test_cannot_decode_generic_tuple() -> None:
     U = TypeVar('U')
     json = (0, 1, 2)
     assert isinstance(typedjson.decode(Tuple[int, U, int], json), typedjson.DecodingError)
+
+
+def test_cannot_decode_generic_list() -> None:
+    U = TypeVar('U')
+    json = list(range(10))
+    assert isinstance(typedjson.decode(List[U], json), typedjson.DecodingError)
 
 
 def test_cannot_decode_generic_union() -> None:

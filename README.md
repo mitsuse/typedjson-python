@@ -19,7 +19,7 @@ JSON decoding for Python with type hinting (PEP 484).
 - Support decoding types as below:
     - primitive types like `str`, `int`, `float`, `bool` and `None`.
     - `Union` and `Optional`.
-    - homogeneous and heterogeneous `Tuple`
+    - homogeneous and heterogeneous `Tuple` and `List`.
     - variable-length `Tuple`.
     - non-generic and parameterized dataclasses.
 - Support API like `json.load` and `json.loads`.
@@ -75,7 +75,7 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md).
 - Use `__init__.__annotation__` to decode JSON as arbitrary class.
 - Provide API to dump like `json.dump` and `json.dumps`.
 - Support Python 3.6 for environments where Python 3.7 is unavailable.
-- Prohibit decoding `List`, `Set` and `Dict` explicitly.
+- Prohibit decoding `Set` and `Dict` explicitly.
 - Provide the API document.
 - Explain why typedjson uses undocumented APIs.
 - Explain what typedjson resolves.
