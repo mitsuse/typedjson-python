@@ -65,6 +65,11 @@ print(typedjson.decode(CatJson, {}))  # Output: <DecodingError path=('id',)>
 Please refer to [test codes](/tests/) for more detail.
 
 
+## Contributions
+
+Please read [CONTRIBUTING.md](/CONTRIBUTING.md).
+
+
 ## TODO
 
 - Use `__init__.__annotation__` to decode JSON as arbitrary class.
@@ -72,7 +77,6 @@ Please refer to [test codes](/tests/) for more detail.
 - Support Python 3.6 for environments where Python 3.7 is unavailable.
 - Prohibit decoding `List`, `Set` and `Dict` explicitly.
 - Provide the API document.
-- Write the contribution guide.
 
 
 [license-badge]: https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square
