@@ -8,7 +8,8 @@ from typing import Tuple
 
 
 def args_of(type_: Type) -> Tuple[Type, ...]:
-    return type_.__args__ if hasattr(type_, '__args__') else tuple()  # type: ignore
+    args = getattr(type_, '__args__', None)
+    return tuple() if args is None else args  # type: ignore
 
 
 def hints_of(type_: Type) -> Optional[Dict[str, Type]]:
@@ -38,8 +39,19 @@ def hints_of(type_: Type) -> Optional[Dict[str, Type]]:
 
 
 def origin_of(type_: Type) -> Optional[Type]:
-    import typing
-    return type_.__origin__ if hasattr(type_, '__origin__') else None
+    from typing import List
+    from typing import Tuple
+
+    origin = getattr(type_, '__origin__', None)
+
+    # In Python 3.6, the origin of Tuple type is `List` but in Python 3.7 it is `list`.
+    if origin is List:
+        return list
+    # In Python 3.6, the origin of Tuple type is `Tuple` but in Python 3.7 it is `tuple`.
+    elif origin is Tuple:
+        return tuple
+    else:
+        return origin  # type: ignore
 
 
 def parameters_of(type_: Type) -> Tuple[Type, ...]:
@@ -47,4 +59,5 @@ def parameters_of(type_: Type) -> Tuple[Type, ...]:
     if origin is None:
         return tuple()
     else:
-        return origin.__parameters__ if hasattr(origin, '__parameters__') else tuple()  # type: ignore
+        parameters = getattr(origin, '__parameters__', None)
+        return tuple() if parameters is None else parameters  # type: ignore
