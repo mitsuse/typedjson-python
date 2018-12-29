@@ -5,3 +5,6 @@ from typedjson.decoding import DecodingError
 
 from typedjson.loading import load
 from typedjson.loading import loads
+
+from typedjson.dumping import dump
+from typedjson.dumping import dumps
