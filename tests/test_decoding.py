@@ -54,7 +54,7 @@ def test_can_decode_str() -> None:
     assert typedjson.decode(str, json) == json
 
 
-def test_can_decode_nt() -> None:
+def test_can_decode_int() -> None:
     json = 1234
     assert typedjson.decode(int, json) == json
 
