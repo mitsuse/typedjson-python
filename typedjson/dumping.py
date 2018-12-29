@@ -9,6 +9,7 @@ from typing import TypeVar
 
 Decoded = TypeVar('Decoded')
 
+
 def _serialize(decoded: Decoded) -> Dict[str, Any]:
     dict_ = dict()
     for k, v in decoded.__dict__.items():
