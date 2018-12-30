@@ -20,7 +20,7 @@ def _serialize(decoded: Decoded) -> Dict[str, Any]:
     return dict_
 
 
-def dump(decoded: Decoded, file_: IO[str]) -> None:
+def dump(decoded: Decoded, file_: IO[str], indent: int = None) -> None:
     import json
 
     from typedjson import DecodingError
@@ -30,12 +30,12 @@ def dump(decoded: Decoded, file_: IO[str]) -> None:
     else:
         if hasattr(decoded, '__dict__'):
             serialized = _serialize(decoded)
-            json.dump(serialized, file_, indent=4)
+            json.dump(serialized, file_, indent=indent)
         else:
-            json.dump(decoded, file_)
+            json.dump(decoded, file_, indent=indent)
 
 
-def dumps(decoded: Decoded) -> str:
+def dumps(decoded: Decoded, indent: int = None) -> str:
     import json
 
     from typedjson import DecodingError
@@ -45,6 +45,6 @@ def dumps(decoded: Decoded) -> str:
     else:
         if hasattr(decoded, '__dict__'):
             serialized = _serialize(decoded)
-            return str(serialized)
+            return json.dumps(serialized, indent=indent)
         else:
-            return json.dumps(decoded)
+            return json.dumps(decoded, indent=indent)
