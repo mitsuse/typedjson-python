@@ -77,6 +77,7 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md).
 - Provide the API document.
 - Explain why typedjson uses undocumented APIs.
 - Explain what typedjson resolves.
+- Support type annotations with forward reference.
 
 
 [license-badge]: https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square
