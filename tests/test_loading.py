@@ -2,8 +2,8 @@
 
 from typing import Optional
 
-import typedjson
 from dataclasses import dataclass
+import typedjson
 
 
 @dataclass(frozen=True)
