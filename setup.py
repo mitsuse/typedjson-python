@@ -19,11 +19,15 @@ setup(
     url='https://github.com/mitsuse/typedjson-python',
     author='Tomoya Kose',
     author_email='tomoya@mitsuse.jp',
-    install_requires=[],
+    install_requires=[
+        'dataclasses>=0.6.0,<1.0.0;python_version<"3.7"',
+    ],
     license='MIT',
     classifiers=[
         'Development Status :: 1 - Planning',
         'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
     keywords=[],

@@ -4,13 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-typedjson = {editable = true, path = "."}
+typedjson = {editable = true,path = "."}
 
 [dev-packages]
 mypy = "~= 0.641"
 pytest = "~= 4.0.1"
 ptpython = "*"
 yapf = "*"
-
-[requires]
-python_version = "3.7"
