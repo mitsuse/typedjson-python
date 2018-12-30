@@ -3,10 +3,8 @@
 from __future__ import annotations
 
 from typing import Any
-from typing import Generic
 from typing import Iterator
 from typing import List
-from typing import NamedTuple
 from typing import Optional
 from typing import Tuple
 from typing import Type
