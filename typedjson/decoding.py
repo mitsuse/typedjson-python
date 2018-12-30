@@ -47,8 +47,8 @@ def decode(type_: Type[Decoded], json: Any, path: Path = ()) -> Union[Decoded, D
 def decode_as_primitive(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
     if type_ in (str, float, int, bool, type(None)) and isinstance(json, type_):
         return json
-    else:
-        return DecodingError(path)
+
+    return DecodingError(path)
 
 
 def decode_as_dataclass(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
@@ -68,8 +68,8 @@ def decode_as_dataclass(type_: Type[Decoded], json: Any, path: Path) -> Union[De
                 return parameter
 
         return type_(*parameters)  # type: ignore
-    else:
-        return DecodingError(path)
+
+    return DecodingError(path)
 
 
 def decode_as_union(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
@@ -88,8 +88,8 @@ def decode_as_union(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
                 break
 
         return decoded
-    else:
-        return DecodingError(path)
+
+    return DecodingError(path)
 
 
 def decode_as_tuple(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
@@ -126,8 +126,8 @@ def decode_as_tuple(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
             list_decoded.append(decoded)
 
         return tuple(list_decoded)  # type: ignore
-    else:
-        return DecodingError(path)
+
+    return DecodingError(path)
 
 
 def decode_as_list(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
@@ -146,5 +146,5 @@ def decode_as_list(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded
             list_decoded.append(decoded)
 
         return list(list_decoded)  # type: ignore
-    else:
-        return DecodingError(path)
+
+    return DecodingError(path)
