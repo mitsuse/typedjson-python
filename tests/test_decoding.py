@@ -7,8 +7,8 @@ from typing import Tuple
 from typing import TypeVar
 from typing import Union
 
-import typedjson
 from dataclasses import dataclass
+import typedjson
 
 
 @dataclass(frozen=True)
