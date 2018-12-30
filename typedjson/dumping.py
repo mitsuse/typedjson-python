@@ -42,5 +42,5 @@ def dumps(decoded: Any, indent: Optional[int] = None) -> str:
         if hasattr(decoded, '__dict__'):
             serialized = _serialize(decoded)
             return json.dumps(serialized, indent=indent)
-        else:
-            return json.dumps(decoded, indent=indent)
+
+        return json.dumps(decoded, indent=indent)
