@@ -36,7 +36,6 @@ def hints_of(type_: Type) -> Optional[Dict[str, Type]]:
 
 def origin_of(type_: Type) -> Optional[Type]:
     from typing import List
-    from typing import Tuple
 
     origin = getattr(type_, '__origin__', None)
 
