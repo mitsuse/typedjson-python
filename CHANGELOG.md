@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 0.5.0
+
 - Support Python 3.6.x for environments where Python 3.7 is unavailable.
 
 
