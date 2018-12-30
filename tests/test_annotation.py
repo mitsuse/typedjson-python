@@ -6,10 +6,10 @@ from typing import Tuple
 from typing import Type
 from typing import TypeVar
 
+from dataclasses import dataclass
 from typedjson.annotation import args_of
 from typedjson.annotation import origin_of
 from typedjson.annotation import parameters_of
-from dataclasses import dataclass
 
 
 @dataclass(frozen=True)
