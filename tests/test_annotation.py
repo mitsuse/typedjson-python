@@ -40,7 +40,7 @@ def test_can_obtain_parameters_of_generics() -> None:
 
 def test_can_obtain_origin_of_generics() -> None:
     expectation = GenericJson
-    assert origin_of(GenericJson[int, str]) == GenericJson
+    assert origin_of(GenericJson[int, str]) == expectation
 
 
 def test_can_obtain_origin_of_tuple() -> None:
