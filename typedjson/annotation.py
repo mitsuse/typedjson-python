@@ -23,7 +23,7 @@ def hints_of(type_: Type) -> Optional[Dict[str, Type]]:
 
     if hasattr(type__, '__annotations__'):
         annotations = get_type_hints(type__)
-        if len(mapping) > 0:
+        if mapping:
             annotations_: Dict[str, Type] = {}
             for n, t in annotations.items():
                 t_ = mapping.get(t)
