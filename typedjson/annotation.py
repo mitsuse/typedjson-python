@@ -29,13 +29,10 @@ def hints_of(type_: Type) -> Optional[Dict[str, Type]]:
                 t_ = mapping.get(t)
                 if t_ is None:
                     return None
-                else:
-                    annotations_[n] = t_
+                annotations_[n] = t_
             return annotations_
-        else:
-            return copy(annotations)
-    else:
-        return None
+        return copy(annotations)
+    return None
 
 
 def origin_of(type_: Type) -> Optional[Type]:
@@ -50,14 +47,14 @@ def origin_of(type_: Type) -> Optional[Type]:
     # In Python 3.6, the origin of Tuple type is `Tuple` but in Python 3.7 it is `tuple`.
     elif origin is Tuple:
         return tuple
-    else:
-        return origin  # type: ignore
+
+    return origin  # type: ignore
 
 
 def parameters_of(type_: Type) -> Tuple[Type, ...]:
     origin = origin_of(type_)
     if origin is None:
         return tuple()
-    else:
-        parameters = getattr(origin, '__parameters__', None)
-        return tuple() if parameters is None else parameters  # type: ignore
+
+    parameters = getattr(origin, '__parameters__', None)
+    return tuple() if parameters is None else parameters  # type: ignore
