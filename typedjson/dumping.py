@@ -5,12 +5,10 @@ from __future__ import annotations
 from typing import Any
 from typing import Dict
 from typing import IO
-from typing import TypeVar
-
-Decoded = TypeVar('Decoded')
+from typing import Optional
 
 
-def _serialize(decoded: Decoded) -> Dict[str, Any]:
+def _serialize(decoded: Any) -> Dict[str, Any]:
     dict_ = dict()
     for k, v in decoded.__dict__.items():
         if hasattr(v, '__dict__'):
@@ -20,7 +18,7 @@ def _serialize(decoded: Decoded) -> Dict[str, Any]:
     return dict_
 
 
-def dump(decoded: Decoded, file_: IO[str], indent: int = None) -> None:
+def dump(decoded: Any, file_: IO[str], indent: Optional[int] = None) -> None:
     import json
 
     from typedjson import DecodingError
@@ -35,7 +33,7 @@ def dump(decoded: Decoded, file_: IO[str], indent: int = None) -> None:
             json.dump(decoded, file_, indent=indent)
 
 
-def dumps(decoded: Decoded, indent: int = None) -> str:
+def dumps(decoded: Any, indent: Optional[int] = None) -> str:
     import json
 
     from typedjson import DecodingError
