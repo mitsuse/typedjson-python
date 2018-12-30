@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from __future__ import annotations
-
 from typing import Optional
 
 import typedjson
@@ -30,28 +28,21 @@ data = CatJson(
     ),
 )
 
-
-expectation = {
-    'id': 'test-cat',
-    'age': 13,
-    'name': {
-        'first': 'jiji',
-    },
-}
+expectation = '''{
+  "id": "test-cat",
+  "age": 13,
+  "name": {
+    "first": "jiji"
+  }
+}'''
 
 
 def test_dump() -> None:
-    import tempfile
-
-    with tempfile.TemporaryFile('w+') as f:
-        typedjson.dump(data, f)
-        f.seek(0)
-        json = f.read() # type: str
-
-    import ast
-    assert ast.literal_eval(json) == expectation
+    import io
+    output = io.StringIO('')
+    typedjson.dump(data, output, indent=2)
+    assert output.getvalue() == expectation
 
 
 def test_dumps() -> None:
-    assert typedjson.dumps(data) == str(expectation)
-
+    assert typedjson.dumps(data, indent=2) == expectation
