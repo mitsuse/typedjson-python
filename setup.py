@@ -21,6 +21,7 @@ setup(
     author_email='tomoya@mitsuse.jp',
     install_requires=[
         'dataclasses>=0.6.0,<1.0.0;python_version<"3.7"',
+        'typing-extensions>=3.6.6,<4.0.0',
     ],
     license='MIT',
     classifiers=[

@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Support API like 'json.dump' and 'json.dumps' ([#1][issue-001] by [@rruc][user-rruc]).
+
 
 ## 0.5.0
 
@@ -30,3 +32,6 @@
     - homogeneous and heterogeneous `Tuple`
     - variable-length `Tuple`.
     - non-generic dataclasses.
+
+[issue-001]: https://github.com/mitsuse/typedjson-python/pull/1
+[user-rruc]: https://github.com/rruc
