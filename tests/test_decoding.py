@@ -94,9 +94,15 @@ def test_can_decode_heterogeneous_fixed_tuple() -> None:
     assert typedjson.decode(Tuple[int, float, str, bool], json) == json
 
 
-def test_can_decode_list() -> None:
+def test_can_decode_homogeneous_list() -> None:
     json = list(range(10))
     assert typedjson.decode(List[int], json) == json
+
+
+def test_can_decode_heterogeneous_list() -> None:
+    json = [1, 'string']
+    T = TypeVar('T', int, str)
+    assert typedjson.decode(List[T], json) == json
 
 
 def test_can_decode_dataclass() -> None:
@@ -277,6 +283,17 @@ def test_cannot_decode_generic_list() -> None:
     U = TypeVar('U')
     json = list(range(10))
     assert isinstance(typedjson.decode(List[U], json), typedjson.DecodingError)
+
+
+def test_cannot_decode_homogeneous_list_with_incompatible() -> None:
+    json = [1, 2, 3]
+    assert isinstance(typedjson.decode(List[str], json), typedjson.DecodingError)
+
+
+def test_cannot_decode_heterogeneous_list_with_incompatible() -> None:
+    json = [1, 'string']
+    T = TypeVar('T', str, str)
+    assert isinstance(typedjson.decode(List[T], json), typedjson.DecodingError)
 
 
 def test_cannot_decode_generic_union() -> None:

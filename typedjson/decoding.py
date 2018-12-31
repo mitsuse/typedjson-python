@@ -140,13 +140,19 @@ def decode_as_list(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded
         Element = args_of(type_)[0]
         list_decoded: List[Any] = []
 
+        constraints = getattr(Element, '__constraints__', None)
+
         for index, element in enumerate(json):
-            decoded = decode(Element, element, path + (str(index), ))
+            if not constraints:
+                decoded = decode(Element, element, path + (str(index), ))
+            else:
+                decoded = decode(constraints[index], element, path + (str(index), ))
+
             if isinstance(decoded, DecodingError):
                 return decoded
 
             list_decoded.append(decoded)
 
-        return list(list_decoded)  # type: ignore
-    else:
-        return DecodingError(path)
+        return list_decoded  # type: ignore
+
+    return DecodingError(path)
