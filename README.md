@@ -72,12 +72,13 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md).
 ## TODO
 
 - Use `__init__.__annotation__` to decode JSON as arbitrary class.
-- Provide API to dump like `json.dump` and `json.dumps`.
 - Prohibit decoding `Set` and `Dict` explicitly.
 - Provide the API document.
 - Explain why typedjson uses undocumented APIs.
 - Explain what typedjson resolves.
 - Support type annotations with forward reference.
+- Improve API to dump like `json.dump` and `json.dumps`.
+    - Provide mypy plugin to check whether the class is encodable as JSON or not with `@typedjson.encodable` decorator.
 
 
 [license-badge]: https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square
