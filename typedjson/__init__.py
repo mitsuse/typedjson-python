@@ -2,9 +2,16 @@
 
 from typedjson.decoding import decode
 from typedjson.decoding import DecodingError
-
+from typedjson.dumping import dump
+from typedjson.dumping import dumps
 from typedjson.loading import load
 from typedjson.loading import loads
 
-from typedjson.dumping import dump
-from typedjson.dumping import dumps
+__all__ = [
+    'decode',
+    'DecodingError',
+    'dump',
+    'dumps',
+    'load',
+    'loads',
+]
