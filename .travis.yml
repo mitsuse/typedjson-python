@@ -15,6 +15,7 @@ install:
 script:
   - pipenv run mypy typedjson
   - pipenv run yapf -r typedjson -d
+  - pipenv run pyflakes typedjson tests
   - pipenv run pytest
 deploy:
   provider: pypi

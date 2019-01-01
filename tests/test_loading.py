@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 
 from typing import Optional
-from typing import Tuple
-from typing import Union
 
 import typedjson
 from dataclasses import dataclass
