@@ -168,6 +168,6 @@ def decode_as_set(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded,
 
             list_decoded.append(decoded)
 
-        return set(list_decoded) # type: ignore
+        return set(list_decoded)  # type: ignore
     else:
         return DecodingError(path)
