@@ -3,6 +3,7 @@
 from typing import Generic
 from typing import List
 from typing import Optional
+from typing import Set
 from typing import Tuple
 from typing import TypeVar
 from typing import Union
@@ -237,6 +238,16 @@ def test_can_decode_union() -> None:
     assert typedjson.decode(Union[UserJson, DocumentJson], json_document) == expectation_document
 
 
+def test_can_decode_homogeneous_set() -> None:
+    json = {1, 2, 3}
+    assert typedjson.decode(Set[int], json) == json
+
+
+def test_can_decode_heterogeneous_set() -> None:
+    json = {1, 'foo'}
+    assert typedjson.decode(Set[Union[str,int]], json) == json
+
+
 def test_cannot_decode_with_wrong_type() -> None:
     json = True
     assert isinstance(typedjson.decode(str, json), typedjson.DecodingError)
@@ -283,6 +294,16 @@ def test_cannot_decode_generic_union() -> None:
     U = TypeVar('U')
     json = 100
     assert isinstance(typedjson.decode(Union[int, U], json), typedjson.DecodingError)
+
+
+def test_cannot_decode_homogeneous_set_with_incompatible() -> None:
+    json = {1, 2, 3}
+    assert isinstance(typedjson.decode(Set[str], json), typedjson.DecodingError)
+
+
+def test_cannot_decode_heterogeneous_set_with_incompatible() -> None:
+    json = {1, 'foo'}
+    assert isinstance(typedjson.decode(Set[Union[str,str]], json), typedjson.DecodingError)
 
 
 def test_cannot_decode_dataclass_with_lack_of_property() -> None:
