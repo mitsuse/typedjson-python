@@ -2,6 +2,7 @@
 
 from typing import Any
 from typing import Dict
+from typing import Set
 from typing import Optional
 from typing import Type
 from typing import Tuple
@@ -50,6 +51,9 @@ def origin_of(type_: Type) -> Optional[Type]:
     # In Python 3.6, the origin of Tuple type is `Tuple` but in Python 3.7 it is `tuple`.
     elif origin is Tuple:
         return tuple
+    # In Python 3.6, the origin of Set type is `Set` but in Python 3.7 it is `set`.
+    elif origin is Set:
+        return set
     else:
         return origin  # type: ignore
 
