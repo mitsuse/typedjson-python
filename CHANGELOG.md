@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 0.6.0
+
 - Support API like 'json.dump' and 'json.dumps' ([#1][issue-001] by [@rruc][user-rruc]).
 - Fix #5: Raise `TypeMismatching` with priority over `UnsupportedDecoding`.
 
