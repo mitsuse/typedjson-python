@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from typing import Any
 from typing import Generic
 from typing import List
 from typing import Optional
@@ -8,6 +9,9 @@ from typing import TypeVar
 from typing import Union
 
 import typedjson
+from typedjson import DecodingError
+from typedjson import TypeMismatch
+from typedjson import UnsupportedDecoding
 from dataclasses import dataclass
 
 
@@ -101,7 +105,7 @@ def test_can_decode_homogeneous_list() -> None:
 
 def test_can_decode_heterogeneous_list() -> None:
     json = [1, 'foo']
-    assert typedjson.decode(List[Union[str,int]], json) == json
+    assert typedjson.decode(List[Union[str, int]], json) == json
 
 
 def test_can_decode_dataclass() -> None:
@@ -244,60 +248,68 @@ def test_can_decode_union() -> None:
 
 def test_cannot_decode_with_wrong_type() -> None:
     json = True
-    assert isinstance(typedjson.decode(str, json), typedjson.DecodingError)
+    assert typedjson.decode(str, json) == DecodingError(TypeMismatch(()))
 
 
 def test_cannot_decode_none() -> None:
     json = None
-    assert isinstance(typedjson.decode(str, json), typedjson.DecodingError)
+    assert typedjson.decode(str, json) == DecodingError(TypeMismatch(()))
 
 
 def test_cannot_decode_object() -> None:
-    json = object()
-    assert isinstance(typedjson.decode(object, json), typedjson.DecodingError)
+    json: Any = {}
+    assert typedjson.decode(object, json) == DecodingError(UnsupportedDecoding(()))
 
 
 def test_cannote_decode_tuple_with_incompatible() -> None:
     json = (0, 1, 2, 3)
-    assert isinstance(typedjson.decode(Tuple[int, str, int, int], json), typedjson.DecodingError)
+    expectation = DecodingError(TypeMismatch(('1', )))
+    assert typedjson.decode(Tuple[int, str, int, int], json) == expectation
 
 
 def test_cannot_decode_fixed_tuple_with_short_sequence() -> None:
     json = (0, 1, 2)
-    assert isinstance(typedjson.decode(Tuple[int, int, int, int], json), typedjson.DecodingError)
+    expectation = DecodingError(TypeMismatch(()))
+    assert typedjson.decode(Tuple[int, int, int, int], json) == expectation
 
 
 def test_cannot_decode_variable_tuple_with_short_sequence() -> None:
     json: Tuple = tuple()
-    assert isinstance(typedjson.decode(Tuple[int, ...], json), typedjson.DecodingError)
+    expectation = DecodingError(TypeMismatch(()))
+    assert typedjson.decode(Tuple[int, ...], json) == expectation
 
 
 def test_cannot_decode_generic_tuple() -> None:
     U = TypeVar('U')
     json = (0, 1, 2)
-    assert isinstance(typedjson.decode(Tuple[int, U, int], json), typedjson.DecodingError)
+    expectation = DecodingError(UnsupportedDecoding(()))
+    assert typedjson.decode(Tuple[int, U, int], json) == expectation
 
 
 def test_cannot_decode_generic_list() -> None:
     U = TypeVar('U')
     json = list(range(10))
-    assert isinstance(typedjson.decode(List[U], json), typedjson.DecodingError)
+    expectation = DecodingError(UnsupportedDecoding(()))
+    assert typedjson.decode(List[U], json) == expectation
 
 
 def test_cannot_decode_homogeneous_list_with_incompatible() -> None:
     json = [1, 2, 3]
-    assert isinstance(typedjson.decode(List[str], json), typedjson.DecodingError)
+    expectation = DecodingError(TypeMismatch(('0', )))
+    assert typedjson.decode(List[str], json) == expectation
 
 
 def test_cannot_decode_heterogeneous_list_with_incompatible() -> None:
     json = [1, 'foo']
-    assert isinstance(typedjson.decode(List[Union[str,str]], json), typedjson.DecodingError)
+    expectation = DecodingError(TypeMismatch(('0', )))
+    assert typedjson.decode(List[Union[str, str]], json) == expectation
 
 
 def test_cannot_decode_generic_union() -> None:
     U = TypeVar('U')
     json = 100
-    assert isinstance(typedjson.decode(Union[int, U], json), typedjson.DecodingError)
+    expectation = DecodingError(UnsupportedDecoding(()))
+    assert typedjson.decode(Union[int, U], json) == expectation
 
 
 def test_cannot_decode_dataclass_with_lack_of_property() -> None:
@@ -309,25 +321,26 @@ def test_cannot_decode_dataclass_with_lack_of_property() -> None:
         },
     }
 
-    expectation = typedjson.DecodingError(path=('name', 'first'))
-    result = typedjson.decode(UserJson, json)
+    expectation = DecodingError(TypeMismatch(('name', 'first')))
 
-    assert isinstance(result, typedjson.DecodingError)
-    assert result.path == expectation.path
+    assert typedjson.decode(UserJson, json) == expectation
 
 
 def test_cannot_decode_parameterized_dataclass_with_wrong_parameter() -> None:
     json = {'t1': 100, 't2': 'hello'}
-    assert isinstance(typedjson.decode(GenericJson[int, int], json), typedjson.DecodingError)
+    expectation = DecodingError(TypeMismatch(('t2', )))
+    assert typedjson.decode(GenericJson[int, int], json) == expectation
 
 
 def test_cannot_decode_raw_dataclass() -> None:
     json = {'t1': 100, 't2': 'hello'}
-    assert isinstance(typedjson.decode(GenericJson, json), typedjson.DecodingError)
+    expectation = DecodingError(UnsupportedDecoding(()))
+    assert typedjson.decode(GenericJson, json) == expectation
 
 
 def test_cannot_decode_generic_dataclass() -> None:
     U1 = TypeVar('U1')
     U2 = TypeVar('U2')
     json = {'t1': 100, 't2': 'hello'}
-    assert isinstance(typedjson.decode(GenericJson[U1, U2], json), typedjson.DecodingError)
+    expectation = DecodingError(UnsupportedDecoding(()))
+    assert typedjson.decode(GenericJson[U1, U2], json) == expectation
