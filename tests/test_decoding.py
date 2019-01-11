@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-from typing import Any
 from typing import Generic
 from typing import List
 from typing import Optional
@@ -254,11 +253,6 @@ def test_cannot_decode_with_wrong_type() -> None:
 def test_cannot_decode_none() -> None:
     json = None
     assert typedjson.decode(str, json) == DecodingError(TypeMismatch(()))
-
-
-def test_cannot_decode_object() -> None:
-    json: Any = {}
-    assert typedjson.decode(object, json) == DecodingError(UnsupportedDecoding(()))
 
 
 def test_cannote_decode_tuple_with_incompatible() -> None:
