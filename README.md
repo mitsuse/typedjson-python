@@ -10,7 +10,7 @@ JSON decoding for Python with type hinting (PEP 484).
 ## Requirements and Restrictions
 
 - Python >= 3.6
-- Use non-generic or parameterized `@dataclasses.dataclass` without modifying `__init__` to decode JSON as class.
+- Use non-generic or parameterized class to decode JSON.
 - Don't use type hints with forward references.
 
 
