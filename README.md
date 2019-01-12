@@ -72,7 +72,6 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md).
 
 ## TODO
 
-- Use `__init__.__annotation__` to decode JSON as arbitrary class.
 - Prohibit decoding `Set` and `Dict` explicitly.
 - Provide the API document.
 - Explain why typedjson uses undocumented APIs.

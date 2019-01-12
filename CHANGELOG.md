@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Use `__init__.__annotation__` to decode JSON as arbitrary class.
+
 
 ## 0.6.0
 

@@ -20,11 +20,14 @@ def hints_of(type_: Type) -> Optional[Dict[str, Type]]:
     type__ = type_ if origin is None else origin
     mapping = dict(zip(parameters_of(type_), args))
 
-    if hasattr(type__, '__annotations__'):
-        annotations = get_type_hints(type__)
+    # if hasattr(type__, '__annotations__'):
+    if hasattr(type__, '__init__'):
+        annotations = get_type_hints(type__.__init__)
         if len(mapping) > 0:
             annotations_: Dict[str, Type] = {}
             for n, t in annotations.items():
+                if n == 'return':
+                    continue
                 t_ = mapping.get(t)
                 if t_ is None:
                     return None
@@ -32,7 +35,9 @@ def hints_of(type_: Type) -> Optional[Dict[str, Type]]:
                     annotations_[n] = t_
             return annotations_
         else:
-            return copy(annotations)
+            annotations_ = copy(annotations)
+            annotations_.pop('return', None)
+            return annotations_
     else:
         return None
 
