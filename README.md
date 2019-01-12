@@ -11,7 +11,7 @@ JSON decoding for Python with type hinting (PEP 484).
 
 - Python >= 3.6
 - Use non-generic or parameterized class to decode JSON.
-- Don't use type hints with forward references.
+- Use type hints without forward references.
 
 
 ## Features
