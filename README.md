@@ -29,7 +29,6 @@ JSON decoding for Python with type hinting (PEP 484).
 
 
 ```python
-from __future__ import annotations
 from typing import Optional
 
 import typedjson
