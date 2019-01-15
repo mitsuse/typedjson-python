@@ -58,7 +58,7 @@ json = {
 
 print(typedjson.decode(CatJson, json))  # Output: CatJson(id='test-cat', age=13, name=NameJson(first='Jiji', last=None))
 
-print(typedjson.decode(CatJson, {}))  # Output: <DecodingError(TypeMismatch(('id',)))>
+print(typedjson.decode(CatJson, {}))  # Output: DecodingError(TypeMismatch(('id',)))
 ```
 
 Please refer to [test codes](/tests/) for more detail.
