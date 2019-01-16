@@ -78,7 +78,7 @@ def decode(type_: Type[Decoded], json: Any, path: Path = ()) -> Union[Decoded, D
         decode_as_tuple,
         decode_as_list,
         decode_as_primitive,
-        decode_as_dataclass,
+        decode_as_class,
     )
 
     result_final: Union[Decoded, DecodingError] = DecodingError(UnsupportedDecoding(path))
@@ -101,7 +101,7 @@ def decode_as_primitive(type_: Type[Decoded], json: Any, path: Path) -> Union[De
         return DecodingError(UnsupportedDecoding(path))
 
 
-def decode_as_dataclass(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
+def decode_as_class(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
     from typedjson.annotation import hints_of
 
     def _decode(annotation: Tuple[str, Any]) -> Union[Decoded, DecodingError]:
