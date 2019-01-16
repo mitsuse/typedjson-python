@@ -12,7 +12,7 @@ def _read(path: str) -> str:
 
 setup(
     name='typedjson',
-    version='0.7.0',
+    version='0.7.1',
     description='JSON decoding for Python with type hinting (PEP 484)',
     long_description=_read('README.md'),
     long_description_content_type='text/markdown',
