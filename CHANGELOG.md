@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Remove a needless function call for `print`.
+
 
 ## 0.7.0
 

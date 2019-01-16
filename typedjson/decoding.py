@@ -110,7 +110,6 @@ def decode_as_dataclass(type_: Type[Decoded], json: Any, path: Path) -> Union[De
         return decode(type_, value, path + (key, ))
 
     annotations = hints_of(type_)
-    print(annotations)
     if isinstance(json, dict) and annotations is not None:
         parameters = tuple(map(_decode, annotations.items()))
 
