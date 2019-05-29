@@ -8,15 +8,14 @@ matrix:
       dist: bionic
       sudo: true
 before_install:
-  - pip install pipenv
+  - pip install poetry
 install:
-  - pipenv install -e . --skip-lock
-  - pipenv install -d --skip-lock
+  - poetry install
 script:
-  - pipenv run mypy typedjson
-  - pipenv run yapf -r typedjson -d
-  - pipenv run pyflakes typedjson tests
-  - pipenv run pytest
+  - poetry run mypy typedjson
+  - poetry run yapf -r typedjson -d
+  - poetry run pyflakes typedjson tests
+  - poetry run pytest
 deploy:
   provider: pypi
   user:
