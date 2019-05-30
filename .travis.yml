@@ -3,14 +3,9 @@ env:
   global:
   - secure: vrJdeqyNlzDGt4Y9IhzfhejuSnZqy1imJtBrEJHpJS/vlLgaBjwlzdWxxUAgcpGB+fO8Y0+nMBlSJw+wEEnnceXDlZgH2SMUs0rPWRsF/vAbrD+ewhuYacJQBQ+2a7BVXBWWjB5kNCxtJkFfIegwyzNeZhCB7pgS3KbZeYH7lifxhBxqyRFlYBjG33z836HkflBYiB8l41nZPmziLfXUUral/6mhdW6K+06n37yvZPH+uNLluiHAEcPq630HkLoYFbo4a1trj1sJmTQ2d9p41+QRyITHiJlGpDycfEjfASc6zlgWMEjJkg582BY/D1SHZCidRnop7VV00nTyc00pvYRbQjTvNcAzlxyBzgbUuJ8UWZD14+PLcvzJA1raqfEeAJuWElIXgdhLib5jxK/CwrcfB1L6MPO8RsvQ6qxOTprsUyQ7be88bwds5A6my0WmFVd0UCBMV3xEbuh3yTWdi7QwgEi8fLoiThiYB5/kkAGl684m7YPfZguzRXlgTU25cnFBJe1y3yqUD27mN7ZR4/CIAyDgf5sbyIET8ezs2WNDNfOF+YfKixpR5MlpNeik/WYJ8tY13vaCfFe1ngbZcni9LJXVmU+ACbhV4z3aO/3+rtfiWuoRaesJmjY25DrtDIdJaQoda71Fpi4ftndiGxqrKiwujWVwy/JMBkwxgJY=
   - secure: n2kRZ8WCoQZ8f3H3OO52tSOo3OFviL27Gc94eFvcIRr1G3r7bnINGZiDO0aHt4PGqxo9g/eLu6EjPB81pzB/HFMYZgxg+jA24qrhHOvaLOmkhFQ7sVgsflDewaize+XFvSRm0rIq8TnIIEcJ6V8TiCw9D3z5Lsdglooe4msygYopl8BQNHGThWNidPe9xdp42QsjJpocos4ShQQjk3azf2TDREw8RjRHnA2Oy1IAEvEhYeZ7F+GyyqavyqlaCM8clvHY1MR7qc6XqljEgFu6rxxU3PzSN6Jnc7fe8Xt17D//+lGQt4KRCWFKgw8KYcpuu64kljh0qbpnzrwWUaUF87RmWi2vxISTomAMyQbjBrXX8rOYP9EmAOypccrdVVnWY6n1U7yanND6cMbG48JJ7y+hurP0riLRiqXq3iyzAHtaAULYycwm+Da6vufKwqD8X2D9MmQLvUz6JXf/aMMRPUWc1EFTSIJkhkkmUJ6An7qHhfduKDj6x1Nr0/DULh/oUGxPGbmWSJBl90IZNRIAirSdspLJeW22cEiy9fTL3jiUCXW+bxdUudzNMU/ZlcTt3r8bkSvVfcFNUa6bEgBTDcqh5H9W0WsBargjD8WGlb+ty4N2MOWMHjuMYtRTxApnDjj7xO1oJBarGZZKGNve+DhBWI5XQueGsF94lM9tQDk=
-matrix:
-  include:
-  - python: 3.6
-    dist: bionic
-    sudo: true
-  - python: 3.7
-    dist: bionic
-    sudo: true
+python:
+- 3.6
+- 3.7
 before_install:
 - pip install poetry
 install:
@@ -20,8 +15,10 @@ script:
 - poetry run black --check typedjson tests
 - poetry run pyflakes typedjson tests
 - poetry run pytest
-deploy:
-  provider: script
-  script: poetry publish --username $PYPI_USER --pasword $PYPI_PASSWORD
+jobs:
+  inlcude:
+    - stage: deploy
+      python: 3.7
+      script: poetry publish --username $PYPI_USER --password $PYPI_PASSWORD
   on:
     tags: true
