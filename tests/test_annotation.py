@@ -18,8 +18,8 @@ class NameJson:
     last: str
 
 
-T1 = TypeVar('T1')
-T2 = TypeVar('T2')
+T1 = TypeVar("T1")
+T2 = TypeVar("T2")
 
 
 @dataclass(frozen=True)

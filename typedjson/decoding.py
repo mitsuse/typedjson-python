@@ -9,8 +9,8 @@ from typing import Type
 from typing import TypeVar
 from typing import Union
 
-Decoded = TypeVar('Decoded')
-Value = TypeVar('Value')
+Decoded = TypeVar("Decoded")
+Value = TypeVar("Value")
 
 Path = Tuple[str, ...]
 
@@ -26,7 +26,7 @@ class TypeMismatch(Exception):
             return False
 
     def __str__(self) -> str:
-        return f'<TypeMismatch path={self.path}>'
+        return f"<TypeMismatch path={self.path}>"
 
     @property
     def path(self) -> Path:
@@ -44,7 +44,7 @@ class UnsupportedDecoding(Exception):
             return False
 
     def __str__(self) -> str:
-        return f'<UnsupportedDecoding path={self.path}>'
+        return f"<UnsupportedDecoding path={self.path}>"
 
     @property
     def path(self) -> Path:
@@ -65,14 +65,16 @@ class DecodingError(Exception):
             return False
 
     def __str__(self) -> str:
-        return f'<DecodingError reason={self.reason}>'
+        return f"<DecodingError reason={self.reason}>"
 
     @property
     def reason(self) -> FailureReason:
         return self.__reason
 
 
-def decode(type_: Type[Decoded], json: Any, path: Path = ()) -> Union[Decoded, DecodingError]:
+def decode(
+    type_: Type[Decoded], json: Any, path: Path = ()
+) -> Union[Decoded, DecodingError]:
     decoders = (
         decode_as_union,
         decode_as_tuple,
@@ -81,7 +83,9 @@ def decode(type_: Type[Decoded], json: Any, path: Path = ()) -> Union[Decoded, D
         decode_as_class,
     )
 
-    result_final: Union[Decoded, DecodingError] = DecodingError(UnsupportedDecoding(path))
+    result_final: Union[Decoded, DecodingError] = DecodingError(
+        UnsupportedDecoding(path)
+    )
     for d in decoders:
         result = d(type_, json, path)
         if isinstance(result, DecodingError):
@@ -94,20 +98,24 @@ def decode(type_: Type[Decoded], json: Any, path: Path = ()) -> Union[Decoded, D
     return result_final
 
 
-def decode_as_primitive(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
+def decode_as_primitive(
+    type_: Type[Decoded], json: Any, path: Path
+) -> Union[Decoded, DecodingError]:
     if type_ in (str, float, int, bool, type(None)):
         return json if isinstance(json, type_) else DecodingError(TypeMismatch(path))
     else:
         return DecodingError(UnsupportedDecoding(path))
 
 
-def decode_as_class(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
+def decode_as_class(
+    type_: Type[Decoded], json: Any, path: Path
+) -> Union[Decoded, DecodingError]:
     from typedjson.annotation import hints_of
 
     def _decode(annotation: Tuple[str, Any]) -> Union[Decoded, DecodingError]:
         key, type_ = annotation
         value = json.get(key)
-        return decode(type_, value, path + (key, ))
+        return decode(type_, value, path + (key,))
 
     annotations = hints_of(type_)
     if isinstance(json, dict) and annotations is not None:
@@ -122,7 +130,9 @@ def decode_as_class(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
         return DecodingError(UnsupportedDecoding(path))
 
 
-def decode_as_union(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
+def decode_as_union(
+    type_: Type[Decoded], json: Any, path: Path
+) -> Union[Decoded, DecodingError]:
     from typedjson.annotation import args_of
     from typedjson.annotation import origin_of
 
@@ -142,7 +152,9 @@ def decode_as_union(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
         return DecodingError(UnsupportedDecoding(path))
 
 
-def decode_as_tuple(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
+def decode_as_tuple(
+    type_: Type[Decoded], json: Any, path: Path
+) -> Union[Decoded, DecodingError]:
     from typedjson.annotation import args_of
     from typedjson.annotation import origin_of
 
@@ -168,8 +180,10 @@ def decode_as_tuple(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
         if _required_length(args_of(type_)) > length:
             return DecodingError(TypeMismatch(path))
 
-        for (index, (type_, element)) in enumerate(zip(_iter_args(args_of(type_)), json)):
-            decoded = decode(type_, element, path + (str(index), ))
+        for (index, (type_, element)) in enumerate(
+            zip(_iter_args(args_of(type_)), json)
+        ):
+            decoded = decode(type_, element, path + (str(index),))
             if isinstance(decoded, DecodingError):
                 return decoded
 
@@ -180,7 +194,9 @@ def decode_as_tuple(type_: Type[Decoded], json: Any, path: Path) -> Union[Decode
         return DecodingError(UnsupportedDecoding(path))
 
 
-def decode_as_list(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded, DecodingError]:
+def decode_as_list(
+    type_: Type[Decoded], json: Any, path: Path
+) -> Union[Decoded, DecodingError]:
     from typedjson.annotation import args_of
     from typedjson.annotation import origin_of
 
@@ -189,7 +205,7 @@ def decode_as_list(type_: Type[Decoded], json: Any, path: Path) -> Union[Decoded
         list_decoded: List[Any] = []
 
         for index, element in enumerate(json):
-            decoded = decode(Element, element, path + (str(index), ))
+            decoded = decode(Element, element, path + (str(index),))
             if isinstance(decoded, DecodingError):
                 return decoded
 

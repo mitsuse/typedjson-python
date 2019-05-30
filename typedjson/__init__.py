@@ -10,12 +10,12 @@ from typedjson.loading import load
 from typedjson.loading import loads
 
 __all__ = [
-    'decode',
-    'DecodingError',
-    'TypeMismatch',
-    'UnsupportedDecoding',
-    'dump',
-    'dumps',
-    'load',
-    'loads',
+    "decode",
+    "DecodingError",
+    "TypeMismatch",
+    "UnsupportedDecoding",
+    "dump",
+    "dumps",
+    "load",
+    "loads",
 ]

@@ -13,7 +13,7 @@ install:
   - poetry install
 script:
   - poetry run mypy typedjson
-  - poetry run yapf -r typedjson -d
+  - poetry run black --check typedjson tests
   - poetry run pyflakes typedjson tests
   - poetry run pytest
 deploy:

@@ -19,23 +19,16 @@ class CatJson:
     name: NameJson
 
 
-expectation = CatJson(
-    id="test-cat",
-    age=13,
-    name=NameJson(
-        first='jiji',
-        last=None,
-    ),
-)
+expectation = CatJson(id="test-cat", age=13, name=NameJson(first="jiji", last=None))
 
 
 def test_load() -> None:
-    with open('fixtures/cat_jiji.json') as f:
+    with open("fixtures/cat_jiji.json") as f:
         assert typedjson.load(CatJson, f) == expectation
 
 
 def test_loads() -> None:
-    with open('fixtures/cat_jiji.json') as f:
+    with open("fixtures/cat_jiji.json") as f:
         json = f.read()
 
     assert typedjson.loads(CatJson, json) == expectation

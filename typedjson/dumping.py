@@ -10,7 +10,7 @@ def _serialize(decoded: Any) -> Any:
     if isinstance(decoded, tuple) or isinstance(decoded, list):
         return tuple(map(_serialize, decoded))
 
-    dict_ = getattr(decoded, '__dict__', None)
+    dict_ = getattr(decoded, "__dict__", None)
     if dict_ is None:
         return decoded
 
@@ -29,7 +29,7 @@ def dump(decoded: Any, file_: IO[str], indent: Optional[int] = None) -> None:
     if isinstance(decoded, DecodingError):
         raise decoded
     else:
-        if hasattr(decoded, '__dict__'):
+        if hasattr(decoded, "__dict__"):
             serialized = _serialize(decoded)
             json.dump(serialized, file_, indent=indent)
         else:

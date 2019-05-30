@@ -4,7 +4,7 @@ from typing import IO
 from typing import Type
 from typing import TypeVar
 
-Decoded = TypeVar('Decoded')
+Decoded = TypeVar("Decoded")
 
 
 def load(type_: Type[Decoded], file_: IO[str]) -> Decoded:

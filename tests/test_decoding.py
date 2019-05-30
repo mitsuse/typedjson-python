@@ -40,8 +40,8 @@ class DocumentJson:
     owner: Optional[OwnerJson]
 
 
-T1 = TypeVar('T1')
-T2 = TypeVar('T2')
+T1 = TypeVar("T1")
+T2 = TypeVar("T2")
 
 
 @dataclass(frozen=True)
@@ -51,7 +51,7 @@ class GenericJson(Generic[T1, T2]):
 
 
 def test_can_decode_str() -> None:
-    json = 'string'
+    json = "string"
     assert typedjson.decode(str, json) == json
 
 
@@ -86,14 +86,14 @@ def test_can_decode_homogeneous_fixed_tuple() -> None:
 
 
 def test_can_decode_homogeneous_variable_tuple() -> None:
-    json_short = (0, )
+    json_short = (0,)
     json_long = (0, 1, 2, 3)
     assert typedjson.decode(Tuple[int, ...], json_short) == json_short
     assert typedjson.decode(Tuple[int, ...], json_long) == json_long
 
 
 def test_can_decode_heterogeneous_fixed_tuple() -> None:
-    json = (0, 1.1, 'hello', True)
+    json = (0, 1.1, "hello", True)
     assert typedjson.decode(Tuple[int, float, str, bool], json) == json
 
 
@@ -103,27 +103,15 @@ def test_can_decode_homogeneous_list() -> None:
 
 
 def test_can_decode_heterogeneous_list() -> None:
-    json = [1, 'foo']
+    json = [1, "foo"]
     assert typedjson.decode(List[Union[str, int]], json) == json
 
 
 def test_can_decode_dataclass() -> None:
-    json = {
-        'id': 'test-user',
-        'age': 28,
-        'name': {
-            'first': 'Tomoya',
-            'last': 'Kose',
-        },
-    }
+    json = {"id": "test-user", "age": 28, "name": {"first": "Tomoya", "last": "Kose"}}
 
     expectation = UserJson(
-        id='test-user',
-        age=28,
-        name=NameJson(
-            first='Tomoya',
-            last='Kose',
-        ),
+        id="test-user", age=28, name=NameJson(first="Tomoya", last="Kose")
     )
 
     assert typedjson.decode(UserJson, json) == expectation
@@ -131,66 +119,44 @@ def test_can_decode_dataclass() -> None:
 
 def test_can_decode_dataclass_with_redundancy() -> None:
     json = {
-        'id': 'test-user',
-        'age': 28,
-        'name': {
-            'first': 'Tomoya',
-            'last': 'Kose',
-        },
-        'role': 'administrator',
+        "id": "test-user",
+        "age": 28,
+        "name": {"first": "Tomoya", "last": "Kose"},
+        "role": "administrator",
     }
 
     expectation = UserJson(
-        id='test-user',
-        age=28,
-        name=NameJson(
-            first='Tomoya',
-            last='Kose',
-        ),
+        id="test-user", age=28, name=NameJson(first="Tomoya", last="Kose")
     )
 
     assert typedjson.decode(UserJson, json) == expectation
 
 
 def test_can_decode_parameterized_dataclass() -> None:
-    json = {'t1': 100, 't2': 'hello'}
-    expectation = GenericJson(t1=100, t2='hello')
+    json = {"t1": 100, "t2": "hello"}
+    expectation = GenericJson(t1=100, t2="hello")
     assert typedjson.decode(GenericJson[int, str], json) == expectation
 
 
 def test_can_decode_dataclass_with_optional() -> None:
-    json_lack = {'id': 'test-document', 'content': 'Hello, world!'}
+    json_lack = {"id": "test-document", "content": "Hello, world!"}
 
-    json_none = {'id': 'test-document', 'content': 'Hello, world!', 'owner': None}
+    json_none = {"id": "test-document", "content": "Hello, world!", "owner": None}
 
     json_filled = {
-        'id': 'test-document',
-        'content': 'Hello, world!',
-        'owner': {
-            'id': 'test-owner',
-            'name': {
-                'first': 'Tomoya',
-                'last': 'Kose',
-            },
-        },
+        "id": "test-document",
+        "content": "Hello, world!",
+        "owner": {"id": "test-owner", "name": {"first": "Tomoya", "last": "Kose"}},
     }
 
     expectation_none = DocumentJson(
-        id='test-document',
-        content='Hello, world!',
-        owner=None,
+        id="test-document", content="Hello, world!", owner=None
     )
 
     expectation_filled = DocumentJson(
-        id='test-document',
-        content='Hello, world!',
-        owner=OwnerJson(
-            id='test-owner',
-            name=NameJson(
-                first='Tomoya',
-                last='Kose',
-            ),
-        ),
+        id="test-document",
+        content="Hello, world!",
+        owner=OwnerJson(id="test-owner", name=NameJson(first="Tomoya", last="Kose")),
     )
 
     assert typedjson.decode(DocumentJson, json_lack) == expectation_none
@@ -200,49 +166,34 @@ def test_can_decode_dataclass_with_optional() -> None:
 
 def test_can_decode_union() -> None:
     json_user = {
-        'id': 'test-user',
-        'age': 28,
-        'name': {
-            'first': 'Tomoya',
-            'last': 'Kose',
-        },
+        "id": "test-user",
+        "age": 28,
+        "name": {"first": "Tomoya", "last": "Kose"},
     }
 
     json_document = {
-        'id': 'test-document',
-        'content': 'Hello, world!',
-        'owner': {
-            'id': 'test-owner',
-            'name': {
-                'first': 'Tomoya',
-                'last': 'Kose',
-            },
-        },
+        "id": "test-document",
+        "content": "Hello, world!",
+        "owner": {"id": "test-owner", "name": {"first": "Tomoya", "last": "Kose"}},
     }
 
     expectation_user = UserJson(
-        id='test-user',
-        age=28,
-        name=NameJson(
-            first='Tomoya',
-            last='Kose',
-        ),
+        id="test-user", age=28, name=NameJson(first="Tomoya", last="Kose")
     )
 
     expectation_document = DocumentJson(
-        id='test-document',
-        content='Hello, world!',
-        owner=OwnerJson(
-            id='test-owner',
-            name=NameJson(
-                first='Tomoya',
-                last='Kose',
-            ),
-        ),
+        id="test-document",
+        content="Hello, world!",
+        owner=OwnerJson(id="test-owner", name=NameJson(first="Tomoya", last="Kose")),
     )
 
-    assert typedjson.decode(Union[UserJson, DocumentJson], json_user) == expectation_user
-    assert typedjson.decode(Union[UserJson, DocumentJson], json_document) == expectation_document
+    assert (
+        typedjson.decode(Union[UserJson, DocumentJson], json_user) == expectation_user
+    )
+    assert (
+        typedjson.decode(Union[UserJson, DocumentJson], json_document)
+        == expectation_document
+    )
 
 
 def test_cannot_decode_with_wrong_type() -> None:
@@ -257,7 +208,7 @@ def test_cannot_decode_none() -> None:
 
 def test_cannote_decode_tuple_with_incompatible() -> None:
     json = (0, 1, 2, 3)
-    expectation = DecodingError(TypeMismatch(('1', )))
+    expectation = DecodingError(TypeMismatch(("1",)))
     assert typedjson.decode(Tuple[int, str, int, int], json) == expectation
 
 
@@ -274,14 +225,14 @@ def test_cannot_decode_variable_tuple_with_short_sequence() -> None:
 
 
 def test_cannot_decode_generic_tuple() -> None:
-    U = TypeVar('U')
+    U = TypeVar("U")
     json = (0, 1, 2)
     expectation = DecodingError(UnsupportedDecoding(()))
     assert typedjson.decode(Tuple[int, U, int], json) == expectation
 
 
 def test_cannot_decode_generic_list() -> None:
-    U = TypeVar('U')
+    U = TypeVar("U")
     json = list(range(10))
     expectation = DecodingError(UnsupportedDecoding(()))
     assert typedjson.decode(List[U], json) == expectation
@@ -289,52 +240,46 @@ def test_cannot_decode_generic_list() -> None:
 
 def test_cannot_decode_homogeneous_list_with_incompatible() -> None:
     json = [1, 2, 3]
-    expectation = DecodingError(TypeMismatch(('0', )))
+    expectation = DecodingError(TypeMismatch(("0",)))
     assert typedjson.decode(List[str], json) == expectation
 
 
 def test_cannot_decode_heterogeneous_list_with_incompatible() -> None:
-    json = [1, 'foo']
-    expectation = DecodingError(TypeMismatch(('0', )))
+    json = [1, "foo"]
+    expectation = DecodingError(TypeMismatch(("0",)))
     assert typedjson.decode(List[Union[str, str]], json) == expectation
 
 
 def test_cannot_decode_generic_union() -> None:
-    U = TypeVar('U')
+    U = TypeVar("U")
     json = 100
     expectation = DecodingError(UnsupportedDecoding(()))
     assert typedjson.decode(Union[int, U], json) == expectation
 
 
 def test_cannot_decode_dataclass_with_lack_of_property() -> None:
-    json = {
-        'id': 'test-user',
-        'age': 28,
-        'name': {
-            'last': 'Kose',
-        },
-    }
+    json = {"id": "test-user", "age": 28, "name": {"last": "Kose"}}
 
-    expectation = DecodingError(TypeMismatch(('name', 'first')))
+    expectation = DecodingError(TypeMismatch(("name", "first")))
 
     assert typedjson.decode(UserJson, json) == expectation
 
 
 def test_cannot_decode_parameterized_dataclass_with_wrong_parameter() -> None:
-    json = {'t1': 100, 't2': 'hello'}
-    expectation = DecodingError(TypeMismatch(('t2', )))
+    json = {"t1": 100, "t2": "hello"}
+    expectation = DecodingError(TypeMismatch(("t2",)))
     assert typedjson.decode(GenericJson[int, int], json) == expectation
 
 
 def test_cannot_decode_raw_dataclass() -> None:
-    json = {'t1': 100, 't2': 'hello'}
+    json = {"t1": 100, "t2": "hello"}
     expectation = DecodingError(UnsupportedDecoding(()))
     assert typedjson.decode(GenericJson, json) == expectation
 
 
 def test_cannot_decode_generic_dataclass() -> None:
-    U1 = TypeVar('U1')
-    U2 = TypeVar('U2')
-    json = {'t1': 100, 't2': 'hello'}
+    U1 = TypeVar("U1")
+    U2 = TypeVar("U2")
+    json = {"t1": 100, "t2": "hello"}
     expectation = DecodingError(UnsupportedDecoding(()))
     assert typedjson.decode(GenericJson[U1, U2], json) == expectation
