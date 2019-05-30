@@ -1,26 +1,27 @@
 language: python
+env:
+  global:
+  - secure: vrJdeqyNlzDGt4Y9IhzfhejuSnZqy1imJtBrEJHpJS/vlLgaBjwlzdWxxUAgcpGB+fO8Y0+nMBlSJw+wEEnnceXDlZgH2SMUs0rPWRsF/vAbrD+ewhuYacJQBQ+2a7BVXBWWjB5kNCxtJkFfIegwyzNeZhCB7pgS3KbZeYH7lifxhBxqyRFlYBjG33z836HkflBYiB8l41nZPmziLfXUUral/6mhdW6K+06n37yvZPH+uNLluiHAEcPq630HkLoYFbo4a1trj1sJmTQ2d9p41+QRyITHiJlGpDycfEjfASc6zlgWMEjJkg582BY/D1SHZCidRnop7VV00nTyc00pvYRbQjTvNcAzlxyBzgbUuJ8UWZD14+PLcvzJA1raqfEeAJuWElIXgdhLib5jxK/CwrcfB1L6MPO8RsvQ6qxOTprsUyQ7be88bwds5A6my0WmFVd0UCBMV3xEbuh3yTWdi7QwgEi8fLoiThiYB5/kkAGl684m7YPfZguzRXlgTU25cnFBJe1y3yqUD27mN7ZR4/CIAyDgf5sbyIET8ezs2WNDNfOF+YfKixpR5MlpNeik/WYJ8tY13vaCfFe1ngbZcni9LJXVmU+ACbhV4z3aO/3+rtfiWuoRaesJmjY25DrtDIdJaQoda71Fpi4ftndiGxqrKiwujWVwy/JMBkwxgJY=
+  - secure: n2kRZ8WCoQZ8f3H3OO52tSOo3OFviL27Gc94eFvcIRr1G3r7bnINGZiDO0aHt4PGqxo9g/eLu6EjPB81pzB/HFMYZgxg+jA24qrhHOvaLOmkhFQ7sVgsflDewaize+XFvSRm0rIq8TnIIEcJ6V8TiCw9D3z5Lsdglooe4msygYopl8BQNHGThWNidPe9xdp42QsjJpocos4ShQQjk3azf2TDREw8RjRHnA2Oy1IAEvEhYeZ7F+GyyqavyqlaCM8clvHY1MR7qc6XqljEgFu6rxxU3PzSN6Jnc7fe8Xt17D//+lGQt4KRCWFKgw8KYcpuu64kljh0qbpnzrwWUaUF87RmWi2vxISTomAMyQbjBrXX8rOYP9EmAOypccrdVVnWY6n1U7yanND6cMbG48JJ7y+hurP0riLRiqXq3iyzAHtaAULYycwm+Da6vufKwqD8X2D9MmQLvUz6JXf/aMMRPUWc1EFTSIJkhkkmUJ6An7qHhfduKDj6x1Nr0/DULh/oUGxPGbmWSJBl90IZNRIAirSdspLJeW22cEiy9fTL3jiUCXW+bxdUudzNMU/ZlcTt3r8bkSvVfcFNUa6bEgBTDcqh5H9W0WsBargjD8WGlb+ty4N2MOWMHjuMYtRTxApnDjj7xO1oJBarGZZKGNve+DhBWI5XQueGsF94lM9tQDk=
 matrix:
   include:
-    - python: 3.6
-      dist: bionic
-      sudo: true
-    - python: 3.7
-      dist: bionic
-      sudo: true
+  - python: 3.6
+    dist: bionic
+    sudo: true
+  - python: 3.7
+    dist: bionic
+    sudo: true
 before_install:
-  - pip install poetry
+- pip install poetry
 install:
-  - poetry install
+- poetry install
 script:
-  - poetry run mypy typedjson
-  - poetry run black --check typedjson tests
-  - poetry run pyflakes typedjson tests
-  - poetry run pytest
+- poetry run mypy typedjson
+- poetry run black --check typedjson tests
+- poetry run pyflakes typedjson tests
+- poetry run pytest
 deploy:
-  provider: pypi
-  user:
-    secure: pk3rV+31rQqt3fgIUiv6Gu0Xp3c8sU/UhD8+1eD6sJprVLGqPfjWLJ0M6AfbPNIpQp24fi81oTguQg+/h6GMWna89aKnz7yny2dbyWPAEUzoasqbzmW16f4bHPPiVpK8PJIlxmBo9IQR9eseS/5aoY3AAiYk19XD/4eTO+/Fd6KFWnVZzJO/Em44CgGeHLdCkP8JRHRqyMu7nnt6noCEC4gZU6PHoveRujgZN8cW5uyUjXyDImfJXeg4SmVBuU5p43RfjGHMeQc8NntaqUUBZ/JpgaM04vltr/DrnNqubHiH4smYeigmTs0fphFsABJtRJ2xNMhk4MrHVspVF6xcC7CVfo1HtKW4X5byf1g1XqWoNZiBOKU5riO99kINwgJrx90cF2zpKSdIgkmR1x5ugUotj0Clne3xwEs7Gd5tcWMAwGno/DcqDsbRn6TT5nJ56BKVNp9I4yOlJ3UCaUrwPYtHljif5YD9/bHDDlztOBpr0ueZ/bi957wl1gFDlWjfAPGHb3rPPmKHc+9C9FCDTkwAopyiCrq5vUhvAQVgrqqQU05nfDFHcSb19T6tx73xH1NYDHzsXg0rmjQbl+XPValOwJntWWPiZ4W1aYnyLkt1LM7DGplvdy7ZH98F2mIm2b1X3AgGMUCB93/ByErizPiR84uu3Sa96OMg1kqDa1o=
-  password:
-    secure: daFDGCub7YTZuoBQ0vlmuLIdpG1aD94STj6luvJ3A4rNdr4F8nQyUI1Tilkb1xGmf/scjqGLlve1izG3BfFAis4yfXryP2/Iebd2ehaGn6KzK9uNg+aorpHDzMfZH71Y/gJBXO9H3OYt+Nx/z4tKivznyBe9+g9RPnm81zRlzbv67f04CAqd75lsKnn0as0H9B6A55QAiBtBv6LBJP04zQn078QIIOqJ6qWcgtAdLkJy7Xvn/3jFjdeJ4aDKkbKOOBi6P12ryJf17TSU7BDyZu9Uwn6wQAz294bXWWsLriCinmAwgb8DF2QAWpO1bgYTlCkIDa6uNeYA8ksp2k0nXV3ChXFOvCLStbKPLissZDYnkjJBI8EKfXLDW3a9HI7otWDXWfVih5V0dOLoyuXzdXIcW8zyc2H0vbj/OlbB7dc4GMYKnVn6JQd1awnB1mNsBVDXBJSlE220zPawoE3DCiUXJ1yGj5N0YxbMGqs4y3kEfucE0Q4DSdnfhJq43t4dB7/N+3ri5kSYBuKQRYyAOD8AmEG3ZhvLMhjpixG3X1mDR3q5f5nez6L67/Fbx497/OPW1cpBH1zhlZxgsz73nxdk/3q03xFnW+9T13/kZ6CnIWQ4PNTRqUrxEalkS0UWLgp7+ZVI4ucNgcD8qeeEaYuKQoA0x3KFZuhV1O57pbQ=
+  provider: script
+  script: poetry publish --username $PYPI_USER --pasword $PYPI_PASSWORD
   on:
     tags: true
