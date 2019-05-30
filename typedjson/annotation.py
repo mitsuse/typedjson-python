@@ -7,7 +7,7 @@ from typing import Tuple
 
 
 def args_of(type_: Type) -> Tuple[Type, ...]:
-    args = getattr(type_, '__args__', None)
+    args = getattr(type_, "__args__", None)
     return tuple() if args is None else args  # type: ignore
 
 
@@ -21,12 +21,12 @@ def hints_of(type_: Type) -> Optional[Dict[str, Type]]:
     mapping = dict(zip(parameters_of(type_), args))
 
     # if hasattr(type__, '__annotations__'):
-    if hasattr(type__, '__init__'):
+    if hasattr(type__, "__init__"):
         annotations = get_type_hints(type__.__init__)
         if len(mapping) > 0:
             annotations_: Dict[str, Type] = {}
             for n, t in annotations.items():
-                if n == 'return':
+                if n == "return":
                     continue
                 t_ = mapping.get(t)
                 if t_ is None:
@@ -36,7 +36,7 @@ def hints_of(type_: Type) -> Optional[Dict[str, Type]]:
             return annotations_
         else:
             annotations_ = copy(annotations)
-            annotations_.pop('return', None)
+            annotations_.pop("return", None)
             return annotations_
     else:
         return None
@@ -46,7 +46,7 @@ def origin_of(type_: Type) -> Optional[Type]:
     from typing import List
     from typing import Tuple
 
-    origin = getattr(type_, '__origin__', None)
+    origin = getattr(type_, "__origin__", None)
 
     # In Python 3.6, the origin of Tuple type is `List` but in Python 3.7 it is `list`.
     if origin is List:
@@ -63,5 +63,5 @@ def parameters_of(type_: Type) -> Tuple[Type, ...]:
     if origin is None:
         return tuple()
     else:
-        parameters = getattr(origin, '__parameters__', None)
+        parameters = getattr(origin, "__parameters__", None)
         return tuple() if parameters is None else parameters  # type: ignore
