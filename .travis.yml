@@ -20,8 +20,3 @@ script:
 - poetry run black --check typedjson tests
 - poetry run pyflakes typedjson tests
 - poetry run pytest
-deploy:
-  provider: script
-  script: poetry publish --username $PYPI_USER --pasword $PYPI_PASSWORD
-  on:
-    tags: true
