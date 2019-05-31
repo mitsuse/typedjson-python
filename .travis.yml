@@ -6,17 +6,14 @@ env:
 python:
 - 3.6
 - 3.7
-before_install:
-- pip install poetry
-install:
-- poetry install
-script:
-- poetry run mypy typedjson
-- poetry run black --check typedjson tests
-- poetry run pyflakes typedjson tests
-- poetry run pytest
 jobs:
   inlcude:
+    - script: pip install poetry
+    - script: poetry install
+    - script: poetry run mypy typedjson
+    - script: poetry run black --check typedjson tests
+    - script: poetry run pyflakes typedjson tests
+    - script: poetry run pytest
     - stage: deploy
       python: 3.7
       script: poetry publish --username $PYPI_USER --password $PYPI_PASSWORD
