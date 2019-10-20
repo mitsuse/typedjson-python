@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from typing import IO
 from typing import Type
 from typing import TypeVar

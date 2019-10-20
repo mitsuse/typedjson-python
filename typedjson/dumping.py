@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from typing import Any
 from typing import Dict
 from typing import IO

@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from typing import Generic
 from typing import List
 from typing import Tuple
