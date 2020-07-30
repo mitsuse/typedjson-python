@@ -17,7 +17,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
-dataclasses = "^0.6.0"
+dataclasses = { version = "^0.6.0", python = "< 3.7" }
 typing-extensions = "^3.7"
 
 [tool.poetry.dev-dependencies]
