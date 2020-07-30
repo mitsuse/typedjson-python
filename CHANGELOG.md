@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add dataclasses as Python restricted dependency.
+
 
 ## 0.7.1
 
