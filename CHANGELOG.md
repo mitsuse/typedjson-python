@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Add py.typed to enable type-checking for typedjson users.
+
 
 ## 0.8.0
 
