@@ -34,6 +34,17 @@ expectation = """{
   }
 }"""
 
+expectation_seq = """[
+  {
+    "id": "test-cat",
+    "age": 13,
+    "name": {
+      "first": "jiji",
+      "last": null
+    }
+  }
+]"""
+
 
 def test_dump() -> None:
     import io
@@ -43,8 +54,20 @@ def test_dump() -> None:
     assert output.getvalue() == expectation
 
 
+def test_dump_seq() -> None:
+    import io
+
+    output = io.StringIO("")
+    typedjson.dump((data,), output, indent=2)
+    assert output.getvalue() == expectation_seq
+
+
 def test_dumps() -> None:
     assert typedjson.dumps(data, indent=2) == expectation
+
+
+def test_dumps_seq() -> None:
+    assert typedjson.dumps((data,), indent=2) == expectation_seq
 
 
 def test_dumps_int() -> None:

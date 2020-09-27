@@ -1,6 +1,7 @@
 ## Unreleased
 
 - Support `typing.NewType`.
+- Fix: `typedjson.dump` should not check the existence of an attribute named `__dict__`.
 
 
 ## 0.9.0
