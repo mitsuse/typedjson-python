@@ -29,11 +29,8 @@ def dump(decoded: Any, file_: IO[str], indent: Optional[int] = None) -> None:
     if isinstance(decoded, DecodingError):
         raise decoded
     else:
-        if hasattr(decoded, "__dict__"):
-            serialized = _serialize(decoded)
-            json.dump(serialized, file_, indent=indent)
-        else:
-            json.dump(decoded, file_, indent=indent)
+        serialized = _serialize(decoded)
+        json.dump(serialized, file_, indent=indent)
 
 
 def dumps(decoded: Any, indent: Optional[int] = None) -> str:
