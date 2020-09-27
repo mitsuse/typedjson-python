@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
 from typing import Optional
+from typing import NewType
 
 import typedjson
 from dataclasses import dataclass
+
+
+A = NewType("A", str)
 
 
 @dataclass(frozen=True)
@@ -66,6 +70,11 @@ def test_dumps_bool() -> None:
 def test_dumps_none() -> None:
     expectation = "null"
     assert typedjson.dumps(None, indent=2) == expectation
+
+
+def test_dumps_newtype() -> None:
+    expectation = '"foo"'
+    assert typedjson.dumps(A("foo"), indent=2) == expectation
 
 
 def test_dumps_tuple_of_name() -> None:
