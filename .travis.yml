@@ -16,7 +16,7 @@ before_install:
 install:
 - poetry install
 script:
-- poetry run mypy typedjson
-- poetry run black --check typedjson tests
-- poetry run pyflakes typedjson tests
+- poetry run mypy typedjson tests
+- poetry run black --check --diff typedjson tests
+- poetry run flake8 --select F typedjson tests
 - poetry run pytest
