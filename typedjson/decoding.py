@@ -101,8 +101,17 @@ def decode(
 def decode_as_primitive(
     type_: Type[Decoded], json: Any, path: Path
 ) -> Union[Decoded, DecodingError]:
+    from typedjson.annotation import supertype_of
+
+    supertype = supertype_of(type_)
     if type_ in (str, float, int, bool, type(None)):
         return json if isinstance(json, type_) else DecodingError(TypeMismatch(path))
+    elif supertype is not None:
+        return (
+            type_(json)  # type: ignore
+            if isinstance(json, supertype)
+            else DecodingError(TypeMismatch(path))
+        )
     else:
         return DecodingError(UnsupportedDecoding(path))
 
