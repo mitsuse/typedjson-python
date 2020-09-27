@@ -22,11 +22,11 @@ typing-extensions = "^3.7"
 
 [tool.poetry.dev-dependencies]
 autoflake = "^1.3"
-mypy = "^0.701.0"
-pyflakes = "^2.1"
-pytest = "^4.5"
-ptpython = "^2.0"
-black = "19.03b"
+mypy = "== 0.770"
+pytest = "^6.1.0"
+ptpython = "^3.0.7"
+black = "20.08b1"
+flake8 = "^3.8.3"
 
 [build-system]
 requires = ["poetry>=0.12"]

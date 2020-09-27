@@ -125,7 +125,7 @@ def decode_as_class(
             if isinstance(parameter, DecodingError):
                 return parameter
 
-        return type_(*parameters)  # type: ignore
+        return type_(*parameters)
     else:
         return DecodingError(UnsupportedDecoding(path))
 
