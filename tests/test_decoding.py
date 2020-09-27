@@ -3,6 +3,7 @@
 from typing import Generic
 from typing import List
 from typing import Optional
+from typing import NewType
 from typing import Tuple
 from typing import TypeVar
 from typing import Union
@@ -12,6 +13,8 @@ from typedjson import DecodingError
 from typedjson import TypeMismatch
 from typedjson import UnsupportedDecoding
 from dataclasses import dataclass
+
+A = NewType("A", str)
 
 
 @dataclass(frozen=True)
@@ -162,6 +165,13 @@ def test_can_decode_dataclass_with_optional() -> None:
     assert typedjson.decode(DocumentJson, json_lack) == expectation_none
     assert typedjson.decode(DocumentJson, json_none) == expectation_none
     assert typedjson.decode(DocumentJson, json_filled) == expectation_filled
+
+
+def test_can_decode_newtype() -> None:
+    raw = "foo"
+    expectation = A(raw)
+
+    assert typedjson.decode(A, raw) == expectation
 
 
 def test_can_decode_union() -> None:

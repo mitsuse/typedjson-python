@@ -2,6 +2,7 @@
 
 from typing import Generic
 from typing import List
+from typing import NewType
 from typing import Tuple
 from typing import Type
 from typing import TypeVar
@@ -9,7 +10,10 @@ from typing import TypeVar
 from typedjson.annotation import args_of
 from typedjson.annotation import origin_of
 from typedjson.annotation import parameters_of
+from typedjson.annotation import supertype_of
 from dataclasses import dataclass
+
+A = NewType("A", str)
 
 
 @dataclass(frozen=True)
@@ -51,6 +55,10 @@ def test_can_obtain_origin_of_list() -> None:
     assert origin_of(List[int]) is list
 
 
+def test_can_obtain_supertype_of_newtype() -> None:
+    assert supertype_of(A) == str
+
+
 def test_cannot_obtain_args_of_raw_generics() -> None:
     expectation: Tuple[Type, ...] = tuple()
     assert args_of(GenericJson) == expectation
@@ -77,3 +85,8 @@ def test_cannot_obtain_parameters_of_non_generics() -> None:
 
 def test_cannot_obtain_origin_of_non_generics() -> None:
     assert origin_of(NameJson) is None
+
+
+def test_cannot_obtain_supertype_of_non_newtype() -> None:
+    assert supertype_of(NameJson) is None
+    assert supertype_of(str) is None

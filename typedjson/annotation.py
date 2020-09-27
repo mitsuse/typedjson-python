@@ -58,6 +58,10 @@ def origin_of(type_: Type) -> Optional[Type]:
         return origin  # type: ignore
 
 
+def supertype_of(type_: Type) -> Optional[Type]:
+    return getattr(type_, "__supertype__", None)  # type: ignore
+
+
 def parameters_of(type_: Type) -> Tuple[Type, ...]:
     origin = origin_of(type_)
     if origin is None:

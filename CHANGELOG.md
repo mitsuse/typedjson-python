@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Support `typing.NewType`.
+
 
 ## 0.9.0
 
