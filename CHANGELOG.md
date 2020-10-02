@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Fix: Decoding `None` should fail as tuple.
+
 
 ## 0.10.1
 

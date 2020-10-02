@@ -225,6 +225,11 @@ def test_cannote_decode_tuple_with_incompatible() -> None:
     assert typedjson.decode(Tuple[int, str, int, int], json) == expectation
 
 
+def test_cannot_decode_none_as_tuple() -> None:
+    json = None
+    assert typedjson.decode(Tuple[str, ...], json) == DecodingError(TypeMismatch(()))
+
+
 def test_cannot_decode_fixed_tuple_with_short_sequence() -> None:
     json = (0, 1, 2)
     expectation = DecodingError(TypeMismatch(()))

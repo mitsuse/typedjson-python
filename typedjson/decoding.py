@@ -184,6 +184,9 @@ def decode_as_tuple(
             last = type_
 
     if origin_of(type_) is tuple:
+        if json is None:
+            return DecodingError(TypeMismatch(path))
+
         list_decoded: List[Any] = []
         length = len(json)
         if _required_length(args_of(type_)) > length:
