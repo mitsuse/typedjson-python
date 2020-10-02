@@ -168,7 +168,7 @@ def decode_as_tuple(
     from typedjson.annotation import origin_of
 
     def _required_length(args: Tuple[Type, ...]) -> int:
-        return len(args) - 1 if args[-1] is ... else len(args)
+        return len(args) - 2 if args[-1] is ... else len(args)
 
     def _iter_args(args: Tuple[Type, ...]) -> Iterator[Type]:
         last: Optional[Type] = None
