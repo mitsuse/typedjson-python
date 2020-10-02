@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from typing import Any
 from typing import Generic
 from typing import List
 from typing import Optional
@@ -89,8 +90,10 @@ def test_can_decode_homogeneous_fixed_tuple() -> None:
 
 
 def test_can_decode_homogeneous_variable_tuple() -> None:
+    json_empty: Any = tuple()
     json_short = (0,)
     json_long = (0, 1, 2, 3)
+    assert typedjson.decode(Tuple[int, ...], json_empty) == json_empty
     assert typedjson.decode(Tuple[int, ...], json_short) == json_short
     assert typedjson.decode(Tuple[int, ...], json_long) == json_long
 
@@ -226,12 +229,6 @@ def test_cannot_decode_fixed_tuple_with_short_sequence() -> None:
     json = (0, 1, 2)
     expectation = DecodingError(TypeMismatch(()))
     assert typedjson.decode(Tuple[int, int, int, int], json) == expectation
-
-
-def test_cannot_decode_variable_tuple_with_short_sequence() -> None:
-    json: Tuple = tuple()
-    expectation = DecodingError(TypeMismatch(()))
-    assert typedjson.decode(Tuple[int, ...], json) == expectation
 
 
 def test_cannot_decode_generic_tuple() -> None:

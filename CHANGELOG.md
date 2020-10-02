@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Fix: Decoding `Tuple[T, ...]` should accept `tuple()`.
+
 
 ## 0.10.0
 
