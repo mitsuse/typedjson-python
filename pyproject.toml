@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "typedjson"
-version = "0.10.1"
+version = "0.10.2"
 description = "JSON decoding for Python with type hinting (PEP 484)"
 authors = ["Tomoya Kose <tomoya@mitsuse.jp>"]
 license = "MIT"
