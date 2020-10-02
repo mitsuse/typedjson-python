@@ -78,7 +78,9 @@ Please read [CONTRIBUTING.md](/CONTRIBUTING.md).
 - Explain what typedjson resolves.
 - Improve API to dump like `json.dump` and `json.dumps`.
     - Provide mypy plugin to check whether the class is encodable as JSON or not with `@typedjson.encodable` decorator.
+- Improve the peformance of `typedjson.decode`.
 - Support type hints with forward reference.
+- Support `TypedDict`.
 
 
 [license-badge]: https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square
