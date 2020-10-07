@@ -64,6 +64,11 @@ def test_can_decode_int() -> None:
     assert typedjson.decode(int, json) == json
 
 
+def test_can_decode_int_as_float() -> None:
+    json = 1234
+    assert typedjson.decode(float, json) == json
+
+
 def test_can_decode_float() -> None:
     json = 1.234
     assert typedjson.decode(float, json) == json
@@ -212,6 +217,11 @@ def test_can_decode_union() -> None:
 def test_cannot_decode_with_wrong_type() -> None:
     json = True
     assert typedjson.decode(str, json) == DecodingError(TypeMismatch(()))
+
+
+def test_cannot_decode_float_as_int() -> None:
+    json = 1.234
+    assert typedjson.decode(int, json) == DecodingError(TypeMismatch(()))
 
 
 def test_cannot_decode_none() -> None:
