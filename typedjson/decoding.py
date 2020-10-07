@@ -104,7 +104,13 @@ def decode_as_primitive(
     from typedjson.annotation import supertype_of
 
     supertype = supertype_of(type_)
-    if type_ in (str, float, int, bool, type(None)):
+    if type_ == float:
+        return (
+            float(json)  # type: ignore
+            if type(json) in (float, int)
+            else DecodingError(TypeMismatch(path))
+        )
+    if type_ in (str, int, bool, type(None)):
         return json if isinstance(json, type_) else DecodingError(TypeMismatch(path))
     elif supertype is not None:
         return (
