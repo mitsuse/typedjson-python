@@ -1,5 +1,8 @@
 ## Unreleased
 
+
+## 0.10.3
+
 - Fix: `typedjson.decode` should accept `int` as `float`.
 
 
