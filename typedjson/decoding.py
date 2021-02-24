@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from typing import Any
+from typing import Iterable
 from typing import Iterator
 from typing import List
 from typing import Optional
@@ -221,6 +222,9 @@ def decode_as_list(
     if origin_of(type_) is list:
         Element = args_of(type_)[0]
         list_decoded: List[Any] = []
+
+        if not isinstance(json, Iterable):
+            return DecodingError(TypeMismatch(path))
 
         for index, element in enumerate(json):
             decoded = decode(Element, element, path + (str(index),))
