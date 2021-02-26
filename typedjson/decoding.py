@@ -9,6 +9,7 @@ from typing import Type
 from typing import TypeVar
 from typing import Union
 
+
 Decoded = TypeVar("Decoded")
 Value = TypeVar("Value")
 
@@ -81,6 +82,8 @@ def decode(
         decode_as_list,
         decode_as_primitive,
         decode_as_class,
+        decode_as_dict,
+        decode_as_any,
     )
 
     result_final: Union[Decoded, DecodingError] = DecodingError(
@@ -118,6 +121,42 @@ def decode_as_primitive(
             if isinstance(json, supertype)
             else DecodingError(TypeMismatch(path))
         )
+    else:
+        return DecodingError(UnsupportedDecoding(path))
+
+
+def decode_as_dict(
+    type_: Type[Decoded], json: Any, path: Path
+) -> Union[Decoded, DecodingError]:
+    from typedjson.annotation import args_of
+    from typedjson.annotation import origin_of
+
+    if isinstance(json, dict) and origin_of(type_) is dict:
+        KeyElement, ValueElement = args_of(type_)
+        dict_decoded: Dict[Any, Any] = {}
+
+        for key, element in json.items():
+            decoded_value = decode(ValueElement, element, path + (str(key),))
+            if isinstance(decoded_value, DecodingError):
+                return decoded_value
+
+            decoded_key = decode(KeyElement, key, path + (str(key),))
+            if isinstance(decoded_key, DecodingError):
+                return decoded_key
+
+            dict_decoded[decoded_key] = decoded_value
+
+        return dict_decoded  # type: ignore
+    else:
+        return DecodingError(UnsupportedDecoding(path))
+
+
+def decode_as_any(
+    type_: Type[Decoded], json: Any, path: Path
+) -> Union[Decoded, DecodingError]:
+
+    if type_ == Any:
+        return json  # type: ignore
     else:
         return DecodingError(UnsupportedDecoding(path))
 

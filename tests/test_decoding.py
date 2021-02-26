@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from typing import Any
+from typing import Dict
 from typing import Generic
 from typing import List
 from typing import Optional
@@ -116,6 +117,30 @@ def test_can_decode_homogeneous_list() -> None:
 def test_can_decode_heterogeneous_list() -> None:
     json = [1, "foo"]
     assert typedjson.decode(List[Union[str, int]], json) == json
+
+
+def test_can_decode_any_list() -> None:
+    json = [1, "foo"]
+    assert typedjson.decode(List[Any], json) == json
+
+
+def test_can_decode_string_any_dict() -> None:
+    json = {"foo": 1, "bar": "baz"}
+    assert typedjson.decode(Dict[str, Any], json) == json
+
+
+def test_cannot_decode_dict_with_bad_key() -> None:
+    json = {"foo": 1, 5: "baz"}
+
+    expectation = DecodingError(TypeMismatch(("5",)))
+    assert typedjson.decode(Dict[str, Any], json) == expectation
+
+
+def test_cannot_decode_dict_with_bad_value() -> None:
+    json = {"foo": 1, "baz": "baz"}
+
+    expectation = DecodingError(TypeMismatch(("foo",)))
+    assert typedjson.decode(Dict[str, str], json) == expectation
 
 
 def test_can_decode_dataclass() -> None:
