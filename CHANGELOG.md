@@ -1,6 +1,11 @@
 ## Unreleased
 
 
+## 0.10.4
+
+- FIX: ecoding None as list should cause TypeMismatch.
+
+
 ## 0.10.3
 
 - Fix: `typedjson.decode` should accept `int` as `float`.
