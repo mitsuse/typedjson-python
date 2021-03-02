@@ -1,5 +1,7 @@
 ## Unreleased
 
+- Omit the support for Python 3.6.
+
 
 ## 0.10.4
 
